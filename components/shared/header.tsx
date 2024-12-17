@@ -3,6 +3,7 @@ import { Container } from './container';
 import Image from 'next/image';
 import { Button } from '../ui';
 import { ArrowRight, ShoppingCart, User } from 'lucide-react';
+import { Title } from './title';
 
 interface HeaderProps {
     className?: string;
@@ -15,9 +16,10 @@ export const Header = ({ className }: HeaderProps) => {
                 <div className="flex items-center gap-4">
                     <Image src={'/logo.png'} alt="" width={35} height={35} />
                     <div>
-                        <h1 className="text-2xl uppercase font-black">
-                            Next Pizza
-                        </h1>
+                        <Title
+                            text="Next Pizza"
+                            className="text-2xl uppercase font-black"
+                        />
                         <p className="text-sm text-gray-400 leading-4">
                             вкуснее уже некуда
                         </p>

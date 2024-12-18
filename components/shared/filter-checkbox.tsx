@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import { Checkbox } from '../ui';
 
-interface FilterCheckboxProps {
+export interface FilterCheckboxProps {
     text: string;
     value: string;
     onCheckedChange?: (checked: boolean) => void;

@@ -3,12 +3,12 @@ import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Title } from '../title';
 
-interface ProductCardProps {
+export interface ProductCardProps {
     id: string;
     title: string;
     price: string;
     imageUrl: string;
-    description: string;
+    ingredients: string;
     className?: string;
 }
 
@@ -16,7 +16,7 @@ export const ProductCard = ({
     className,
     imageUrl,
     title,
-    description,
+    ingredients,
     price,
     id,
 }: ProductCardProps) => {
@@ -32,9 +32,9 @@ export const ProductCard = ({
                 </div>
                 <div>
                     <Title text={title} className="font-bold mb-2" />
-                    <p className="text-sm text-gray-400 mb-3">{description}</p>
+                    <p className="text-sm text-gray-400 mb-3">{ingredients}</p>
                     <div className="flex items-center justify-between">
-                        <span className="text-[20px]">
+                        <span className="text-[18px]">
                             от <b>{price} BYN</b>
                         </span>
                         <Button

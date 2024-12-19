@@ -6,3 +6,4 @@ export { SortPopup } from './sort-popup';
 export { TopBar } from './top-bar';
 export { FilterPanel } from './filter/filter-panel';
 export { RangeSlider } from './range-slider';
+export { ProductCard } from './product/product-card';

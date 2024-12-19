@@ -80,12 +80,12 @@ export default function Home() {
                             <ProductList
                                 products={products}
                                 title="Пиццы"
-                                categoryId="1"
+                                categoryId={1}
                             />
                             <ProductList
                                 products={products}
-                                title="Тефтели"
-                                categoryId="2"
+                                title="Комбо"
+                                categoryId={2}
                             />
                         </div>
                     </div>

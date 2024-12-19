@@ -1,23 +1,25 @@
+'use client';
 import { cn } from '@/lib/utils';
+import { useCategories } from '@/store/category';
+import { Link } from 'react-scroll';
 
 interface CategoriesProps {
     className?: string;
 }
 
 const cats = [
-    'Пиццы',
-    'Комбо',
-    'Закуски',
-    'Коктейли',
-    'Кофе',
-    'Напитки',
-    'Десерты',
-    'Еще',
+    { id: 1, name: 'Пиццы' },
+    { id: 2, name: 'Комбо' },
+    { id: 3, name: 'Закуски' },
+    { id: 4, name: 'Коктейли' },
+    { id: 5, name: 'Кофе' },
+    { id: 6, name: 'Напитки' },
+    { id: 7, name: 'Десерты' },
 ];
 
-const activeIndex = 0;
-
 export const Categories = ({ className }: CategoriesProps) => {
+    const categoryActiveId = useCategories((state) => state.activeId);
+
     return (
         <div
             className={cn(
@@ -25,18 +27,21 @@ export const Categories = ({ className }: CategoriesProps) => {
                 className,
             )}
         >
-            {cats.map((cat, index) => {
+            {cats.map(({ id, name }) => {
                 return (
-                    <a
-                        key={index}
+                    <Link
+                        key={id}
+                        smooth={true}
+                        offset={-100}
                         className={cn(
                             'flex items-center font-bold h-11 rounded-2xl px-5',
-                            activeIndex === index &&
+                            categoryActiveId === id &&
                                 'bg-white shadow-md shadow-gray-200 text-primary',
                         )}
+                        to={name}
                     >
-                        <button>{cat}</button>
-                    </a>
+                        <button>{name}</button>
+                    </Link>
                 );
             })}
         </div>

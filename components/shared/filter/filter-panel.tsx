@@ -1,7 +1,7 @@
-import { Title } from './title';
+import { Title } from '../title';
 import { FilterCheckboxProps } from './filter-checkbox';
-import { Input } from '../ui';
-import { RangeSlider } from './range-slider';
+import { Input } from '../../ui';
+import { RangeSlider } from '../range-slider';
 import { FilterCheckboxList } from './filter-checkbox-list';
 import { FilterRadioGroup } from './filter-radio-group';
 

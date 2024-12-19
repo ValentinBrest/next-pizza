@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Checkbox } from '../ui';
+import { Checkbox } from '../../ui';
 
 export interface FilterCheckboxProps {
     text: string;

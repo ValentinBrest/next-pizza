@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { RadioGroup, RadioGroupItem } from '../../ui/radio-group';
 
 interface RadioItem {
     text: string;
@@ -23,7 +23,7 @@ export const FilterRadioGroup = ({
             {title && <p className="font-bold mb-4">{title}</p>}
             <RadioGroup className={cn('flex flex-col gap-4')}>
                 {items.map((item) => (
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3" key={item.value}>
                         <RadioGroupItem
                             value={item.value}
                             id={`radio-${String(item.value)}`}

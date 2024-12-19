@@ -1,7 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
 import { FilterCheckbox, FilterCheckboxProps } from './filter-checkbox';
-import { Button, Input } from '../ui';
+import { Input } from '../../ui';
 import { ChangeEvent, useMemo, useState } from 'react';
 
 interface FilterCheckboxListProps {
@@ -35,9 +35,8 @@ export const FilterCheckboxList = ({
                       .includes(searchValue.toLowerCase().trim()),
               )
             : defaultItems.slice(0, limit);
-    }, [showAll, searchValue]);
+    }, [showAll, items, defaultItems, limit, searchValue]);
 
-    console.log(list);
     const onChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchValue(e.target.value);
     };

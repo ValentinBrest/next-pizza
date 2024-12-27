@@ -2,18 +2,19 @@
 import { FilterCheckbox, FilterCheckboxProps } from './filter-checkbox';
 import { Input, Skeleton } from '../../ui';
 import { ChangeEvent, useMemo, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface FilterCheckboxListProps {
     title?: string;
     items: FilterCheckboxProps[];
-    defaultItems: FilterCheckboxProps[];
+    defaultItems?: FilterCheckboxProps[];
     limit?: number;
     loading?: boolean;
     searchInputPlaceholder?: string;
     onClickCheckbox?: (id: string) => void;
     defaultValue?: string[];
     className?: string;
-    selectedIds?: Set<string>;
+    selectedValues: Set<string>;
     name: string;
 }
 
@@ -27,7 +28,7 @@ export const FilterCheckboxList = ({
     onClickCheckbox,
     defaultValue,
     loading,
-    selectedIds,
+    selectedValues,
     name,
 }: FilterCheckboxListProps) => {
     const [showAll, setShowAll] = useState(false);
@@ -39,7 +40,7 @@ export const FilterCheckboxList = ({
                       .toLowerCase()
                       .includes(searchValue.toLowerCase().trim()),
               )
-            : defaultItems.slice(0, limit);
+            : (defaultItems || items).slice(0, limit);
     }, [showAll, items, defaultItems, limit, searchValue]);
 
     const onChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -78,7 +79,12 @@ export const FilterCheckboxList = ({
                 />
             )}
 
-            <div className="flex flex-col gap-4 max-h-96 pr-2 overflow-auto scrollabar">
+            <div
+                className={cn(
+                    'flex flex-col gap-4 max-h-96 pr-2',
+                    items.length > limit && 'overflow-auto scrollabar',
+                )}
+            >
                 {list.map((item, index) => {
                     return (
                         <FilterCheckbox
@@ -86,7 +92,7 @@ export const FilterCheckboxList = ({
                             text={item.text}
                             value={item.value}
                             endAdornment={item.endAdornment}
-                            checked={selectedIds?.has(item.value)}
+                            checked={selectedValues?.has(item.value)}
                             onCheckedChange={() =>
                                 onClickCheckbox?.(item.value)
                             }
@@ -98,11 +104,7 @@ export const FilterCheckboxList = ({
             </div>
 
             {items.length > limit && (
-                <div
-                    className={
-                        showAll ? 'border-t border-t-neutral-100 mt-4' : ''
-                    }
-                >
+                <div className={showAll ? 'border-t border-t-neutral-100' : ''}>
                     <button
                         className="text-primary mt-3"
                         onClick={() => setShowAll((prev) => !prev)}

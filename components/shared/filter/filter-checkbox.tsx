@@ -8,6 +8,7 @@ export interface FilterCheckboxProps {
     checked?: boolean;
     endAdornment?: boolean;
     className?: string;
+    listName?: string;
 }
 
 export const FilterCheckbox = ({
@@ -17,18 +18,19 @@ export const FilterCheckbox = ({
     endAdornment,
     onCheckedChange,
     checked,
+    listName,
 }: FilterCheckboxProps) => {
     return (
         <div className={cn('flex items-center gap-3', className)}>
             <Checkbox
-                id={`checkbox-${String(value)}`}
+                id={`checkbox-${String(listName)}-${String(value)}`}
                 value={value}
                 checked={checked}
                 onCheckedChange={onCheckedChange}
                 className="h-5 w-5 rounded-[8px]"
             />
             <label
-                htmlFor={`checkbox-${String(value)}`}
+                htmlFor={`checkbox-${String(listName)}-${String(value)}`}
                 className="cursor-pointer leading-none"
             >
                 {text}

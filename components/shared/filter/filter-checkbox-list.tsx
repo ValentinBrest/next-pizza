@@ -1,7 +1,6 @@
 'use client';
-import { cn } from '@/lib/utils';
 import { FilterCheckbox, FilterCheckboxProps } from './filter-checkbox';
-import { Input } from '../../ui';
+import { Input, Skeleton } from '../../ui';
 import { ChangeEvent, useMemo, useState } from 'react';
 
 interface FilterCheckboxListProps {
@@ -9,10 +8,13 @@ interface FilterCheckboxListProps {
     items: FilterCheckboxProps[];
     defaultItems: FilterCheckboxProps[];
     limit?: number;
+    loading?: boolean;
     searchInputPlaceholder?: string;
-    onChange?: (values: string[]) => void;
+    onClickCheckbox?: (id: string) => void;
     defaultValue?: string[];
     className?: string;
+    selectedIds?: Set<string>;
+    name: string;
 }
 
 export const FilterCheckboxList = ({
@@ -22,8 +24,11 @@ export const FilterCheckboxList = ({
     items,
     limit = 5,
     searchInputPlaceholder,
-    onChange,
+    onClickCheckbox,
     defaultValue,
+    loading,
+    selectedIds,
+    name,
 }: FilterCheckboxListProps) => {
     const [showAll, setShowAll] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -40,8 +45,29 @@ export const FilterCheckboxList = ({
     const onChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchValue(e.target.value);
     };
+
+    if (loading) {
+        return (
+            <div className={className}>
+                {title && <p className="font-bold mb-4">{title}</p>}
+                <div className="flex flex-col gap-4">
+                    {Array(limit)
+                        .fill(5)
+                        .map((_, index) => (
+                            <Skeleton
+                                key={index}
+                                className="w-full h-[20px] rounded-full"
+                            />
+                        ))}
+                </div>
+
+                <Skeleton className="w-full h-[25px] rounded-full mt-2" />
+            </div>
+        );
+    }
+
     return (
-        <div className={cn('', className)}>
+        <div className={className}>
             {title && <p className="font-bold mb-4">{title}</p>}
 
             {showAll && searchInputPlaceholder && (
@@ -60,9 +86,12 @@ export const FilterCheckboxList = ({
                             text={item.text}
                             value={item.value}
                             endAdornment={item.endAdornment}
-                            checked={false}
-                            onCheckedChange={(ids) => console.log(ids)}
+                            checked={selectedIds?.has(item.value)}
+                            onCheckedChange={() =>
+                                onClickCheckbox?.(item.value)
+                            }
                             className={item.className}
+                            listName={name}
                         />
                     );
                 })}

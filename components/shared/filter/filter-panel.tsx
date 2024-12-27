@@ -1,9 +1,12 @@
+'use client';
 import { Title } from '../title';
 import { FilterCheckboxProps } from './filter-checkbox';
 import { Input } from '../../ui';
 import { RangeSlider } from '../range-slider';
 import { FilterCheckboxList } from './filter-checkbox-list';
 import { FilterRadioGroup } from './filter-radio-group';
+import { useFilterIngredients } from '@/hook/useFilterIngredients';
+import { Ingredient } from '@prisma/client';
 
 interface FilterPanelProps {
     className?: string;
@@ -13,32 +16,23 @@ const topFilterCheckboxItems: FilterCheckboxProps[] = [
     { value: '1', text: 'Можно собирать' },
     { value: '2', text: 'Новинки' },
 ];
-const IngridientsCheckboxItems: FilterCheckboxProps[] = [
-    { value: '1', text: 'Сырный соус' },
-    { value: '2', text: 'Моцарелла' },
-    { value: '3', text: 'Чеснок' },
-    { value: '4', text: 'Солённые огурчики' },
-    { value: '5', text: 'Красный лук' },
-    { value: '6', text: 'Томаты' },
-    { value: '1', text: 'Сырный соус' },
-    { value: '2', text: 'Моцарелла' },
-    { value: '3', text: 'Чеснок' },
-    { value: '4', text: 'Солённые огурчики' },
-    { value: '5', text: 'Красный лук' },
-    { value: '6', text: 'Томаты' },
-    { value: '1', text: 'Сырный соус' },
-    { value: '2', text: 'Моцарелла' },
-    { value: '3', text: 'Чеснок' },
-    { value: '4', text: 'Солённые огурчики' },
-    { value: '5', text: 'Красный лук' },
-    { value: '6', text: 'Томаты' },
-];
+
 const doughTypeCheckboxItems: FilterCheckboxProps[] = [
     { value: '1', text: 'Традиционное' },
     { value: '2', text: 'Тонкое' },
 ];
 
 export const FilterPanel = ({ className }: FilterPanelProps) => {
+    const { ingredients, loading, selectedIds, toggle } =
+        useFilterIngredients();
+
+    const ingridientsCheckboxItems: FilterCheckboxProps[] = ingredients.map(
+        (item: Ingredient) => ({
+            value: String(item.id),
+            text: item.name,
+        }),
+    );
+
     return (
         <div className={className}>
             <Title text="Фильтрация" className="font-bold" />
@@ -46,6 +40,7 @@ export const FilterPanel = ({ className }: FilterPanelProps) => {
                 className="flex flex-col gap-4 pt-7 pb-6"
                 items={topFilterCheckboxItems}
                 defaultItems={topFilterCheckboxItems}
+                name="top"
             />
 
             <div className="pt-6 pb-7 border-y border-y-neutral-100">
@@ -74,8 +69,12 @@ export const FilterPanel = ({ className }: FilterPanelProps) => {
                 className="flex flex-col gap-4 mt-7 "
                 title="Ингридиенты:"
                 searchInputPlaceholder="Поиск..."
-                items={IngridientsCheckboxItems}
-                defaultItems={IngridientsCheckboxItems}
+                items={ingridientsCheckboxItems}
+                defaultItems={ingridientsCheckboxItems}
+                loading={loading}
+                onClickCheckbox={toggle}
+                selectedIds={selectedIds}
+                name="ingredients"
             />
             <FilterRadioGroup
                 className="flex flex-col gap-4 mt-7"

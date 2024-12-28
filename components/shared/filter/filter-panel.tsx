@@ -1,8 +1,6 @@
 'use client';
-import { useFilterIngredients } from '@/hook/useFilterIngredients';
+import { useFilters, useIngredients, useQueryFilter } from '@/hook';
 import { Ingredient } from '@prisma/client';
-import { useState } from 'react';
-import { useSet } from 'react-use';
 import { Input } from '../../ui';
 import { RangeSlider } from '../range-slider';
 import { Title } from '../title';
@@ -25,18 +23,10 @@ const doughTypeItems: FilterCheckboxProps[] = [
 ];
 
 export const FilterPanel = ({ className }: FilterPanelProps) => {
-    const [selectedDoughType, { toggle: toggleDoughType }] = useSet(
-        new Set<string>([]),
-    );
-    const [selectedPizzaSize, { toggle: togglePizzaSize }] = useSet(
-        new Set<string>([]),
-    );
-    const [rangeFilter, setRangeFilter] = useState({
-        from: 0,
-        to: 1000,
-    });
-    const { ingredients, loading, selectedIngredients, toggleIngr } =
-        useFilterIngredients();
+    const { ingredients, loadingIngredients } = useIngredients();
+    const filters = useFilters();
+
+    useQueryFilter(filters);
 
     const ingridientsCheckboxItems: FilterCheckboxProps[] = ingredients.map(
         (item: Ingredient) => ({
@@ -53,8 +43,8 @@ export const FilterPanel = ({ className }: FilterPanelProps) => {
                 items={sizePizzaItems}
                 title="Размер пиццы:"
                 name="sizePizza"
-                selectedValues={selectedPizzaSize}
-                onClickCheckbox={togglePizzaSize}
+                selectedValues={filters.selectedPizzaSize}
+                onClickCheckbox={filters.togglePizzaSize}
             />
 
             <div className="pt-6 pb-7 border-y border-y-neutral-100">
@@ -66,11 +56,11 @@ export const FilterPanel = ({ className }: FilterPanelProps) => {
                         min={0}
                         placeholder="0"
                         defaultValue={0}
-                        value={rangeFilter.from}
+                        value={filters.prices.priceFrom}
                         onChange={(e) =>
-                            setRangeFilter((prev) => ({
+                            filters.setPrice((prev) => ({
                                 ...prev,
-                                from: Number(e.target.value),
+                                priceFrom: Number(e.target.value),
                             }))
                         }
                     />
@@ -78,13 +68,13 @@ export const FilterPanel = ({ className }: FilterPanelProps) => {
                         className="h-10 w-24"
                         type="number"
                         min={0}
-                        placeholder="1000"
-                        defaultValue={1000}
-                        value={rangeFilter.to}
+                        placeholder="100"
+                        defaultValue={150}
+                        value={filters.prices.priceTo}
                         onChange={(e) =>
-                            setRangeFilter((prev) => ({
+                            filters.setPrice((prev) => ({
                                 ...prev,
-                                to: Number(e.target.value),
+                                priceTo: Number(e.target.value),
                             }))
                         }
                     />
@@ -92,12 +82,15 @@ export const FilterPanel = ({ className }: FilterPanelProps) => {
                 <div className="block mt-4 mr-1">
                     <RangeSlider
                         min={0}
-                        max={1000}
-                        step={10}
-                        onValueChange={([from, to]) =>
-                            setRangeFilter({ from, to })
+                        max={150}
+                        step={1}
+                        onValueChange={([priceFrom, priceTo]) =>
+                            filters.setPrice({ priceFrom, priceTo })
                         }
-                        value={[rangeFilter.from, rangeFilter.to]}
+                        value={[
+                            filters.prices.priceFrom || 0,
+                            filters.prices.priceTo || 150,
+                        ]}
                     />
                 </div>
             </div>
@@ -107,17 +100,17 @@ export const FilterPanel = ({ className }: FilterPanelProps) => {
                 searchInputPlaceholder="Поиск..."
                 items={ingridientsCheckboxItems}
                 defaultItems={ingridientsCheckboxItems}
-                loading={loading}
-                onClickCheckbox={toggleIngr}
-                selectedValues={selectedIngredients}
+                loading={loadingIngredients}
+                onClickCheckbox={filters.toggleIngredients}
+                selectedValues={filters.selectedIngredients}
                 name="ingredients"
             />
             <FilterCheckboxList
                 className="flex flex-col gap-4 mt-7 "
                 title="Тип теста:"
                 items={doughTypeItems}
-                onClickCheckbox={toggleDoughType}
-                selectedValues={selectedDoughType}
+                onClickCheckbox={filters.toggleDoughType}
+                selectedValues={filters.selectedDoughType}
                 name="dough"
             />
         </div>

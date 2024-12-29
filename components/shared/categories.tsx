@@ -1,23 +1,15 @@
 'use client';
 import { cn } from '@/lib/utils';
 import { useCategories } from '@/store/category';
+import { Category } from '@prisma/client';
 import { Link } from 'react-scroll';
 
 interface CategoriesProps {
     className?: string;
+    items: Category[];
 }
 
-const cats = [
-    { id: 1, name: 'Пиццы' },
-    { id: 2, name: 'Комбо' },
-    { id: 3, name: 'Закуски' },
-    { id: 4, name: 'Коктейли' },
-    { id: 5, name: 'Кофе' },
-    { id: 6, name: 'Напитки' },
-    { id: 7, name: 'Десерты' },
-];
-
-export const Categories = ({ className }: CategoriesProps) => {
+export const Categories = ({ className, items }: CategoriesProps) => {
     const categoryActiveId = useCategories((state) => state.activeId);
 
     return (
@@ -27,7 +19,7 @@ export const Categories = ({ className }: CategoriesProps) => {
                 className,
             )}
         >
-            {cats.map(({ id, name }) => {
+            {items.map(({ id, name }) => {
                 return (
                     <Link
                         key={id}

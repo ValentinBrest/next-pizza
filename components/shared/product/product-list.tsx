@@ -47,7 +47,7 @@ export const ProductList = ({
                         key={pr.id}
                         ingredients={pr.ingredients}
                         price={pr.items[0].price}
-                        title={pr.title}
+                        title={pr.name}
                         imageUrl={pr.imageUrl}
                     />
                 ))}

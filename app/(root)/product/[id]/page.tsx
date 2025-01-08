@@ -12,7 +12,7 @@ export default async function ProductPage({
         where: { id: Number(id) },
         include: { items: true, ingredients: true },
     });
-    
+
     if (!product) {
         return notFound();
     }

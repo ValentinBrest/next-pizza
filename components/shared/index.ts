@@ -9,3 +9,5 @@ export { RangeSlider } from './range-slider';
 export { ProductCard } from './product/product-card';
 export { ProductList } from './product/product-list';
 export { SearchInput } from './search-input';
+export { ProductImage } from './product/product-image';
+export { GroupVariants } from './group-variants';

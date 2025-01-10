@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { Title } from '../title';
+import { Title } from './title';
 import { ProductCard } from './product-card';
 import { useEffect, useRef } from 'react';
 import { useIntersection } from 'react-use';

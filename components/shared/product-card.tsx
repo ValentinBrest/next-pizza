@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
-import { Title } from '../title';
 import { Ingredient } from '@prisma/client';
+import { Title } from './title';
 
 export interface ProductCardProps {
     id: string;

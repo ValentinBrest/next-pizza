@@ -1,16 +1,17 @@
+import { PizzaSizesType } from '@/constants/pizza';
 import { cn } from '@/lib/utils';
 
-interface ProductImageProps {
+interface ProductPizzaImageProps {
     className?: string;
     imageUrl: string;
-    size: number;
+    size: PizzaSizesType;
 }
 
-export const ProductImage = ({
+export const ProductPizzaImage = ({
     className,
     imageUrl,
-    size = 20,
-}: ProductImageProps) => {
+    size = 25,
+}: ProductPizzaImageProps) => {
     return (
         <div
             className={cn(
@@ -20,13 +21,13 @@ export const ProductImage = ({
         >
             <img
                 src={imageUrl}
-                alt="product"
+                alt="pizza"
                 className={cn(
                     'relative left-[12px] top-[13px] transition-all duration-300 z-10 ',
                     {
-                        'w-[300px] h-[300px]': size === 20,
+                        'w-[300px] h-[300px]': size === 25,
                         'w-[400px] h-[400px]': size === 30,
-                        'w-[500px] h-[500px]': size === 40,
+                        'w-[500px] h-[500px]': size === 35,
                     },
                 )}
             />

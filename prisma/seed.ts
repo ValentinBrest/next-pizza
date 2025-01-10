@@ -14,7 +14,7 @@ const generateProductItem = ({
 }: {
     productId: number;
     pizzaType?: 1 | 2;
-    size?: 20 | 30 | 40;
+    size?: 25 | 30 | 35;
 }) => {
     return {
         productId,
@@ -98,7 +98,7 @@ async function create() {
             generateProductItem({
                 productId: pizza1.id,
                 pizzaType: 1,
-                size: 20,
+                size: 25,
             }),
             generateProductItem({
                 productId: pizza1.id,
@@ -108,14 +108,14 @@ async function create() {
             generateProductItem({
                 productId: pizza1.id,
                 pizzaType: 2,
-                size: 40,
+                size: 35,
             }),
 
             // Пицца "Сырная"
             generateProductItem({
                 productId: pizza2.id,
                 pizzaType: 1,
-                size: 20,
+                size: 25,
             }),
             generateProductItem({
                 productId: pizza2.id,
@@ -125,12 +125,12 @@ async function create() {
             generateProductItem({
                 productId: pizza2.id,
                 pizzaType: 1,
-                size: 40,
+                size: 35,
             }),
             generateProductItem({
                 productId: pizza2.id,
                 pizzaType: 2,
-                size: 20,
+                size: 25,
             }),
             generateProductItem({
                 productId: pizza2.id,
@@ -140,14 +140,14 @@ async function create() {
             generateProductItem({
                 productId: pizza2.id,
                 pizzaType: 2,
-                size: 40,
+                size: 35,
             }),
 
             // Пицца "Чоризо фреш"
             generateProductItem({
                 productId: pizza3.id,
                 pizzaType: 1,
-                size: 20,
+                size: 25,
             }),
             generateProductItem({
                 productId: pizza3.id,
@@ -157,7 +157,7 @@ async function create() {
             generateProductItem({
                 productId: pizza3.id,
                 pizzaType: 2,
-                size: 40,
+                size: 35,
             }),
 
             // Остальные продукты

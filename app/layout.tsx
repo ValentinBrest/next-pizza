@@ -13,9 +13,9 @@ export default function GlobalLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="ru">
+        <html lang="en">
             <head>
-                <link rel="icon" href="/logo.png"></link>
+                <link data-rh="true" rel="icon" href="/logo.png" />
             </head>
             <body className={nunito.variable}>{children}</body>
         </html>

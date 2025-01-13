@@ -70,12 +70,16 @@ export const ChoosePizzaForm = ({
                         <GroupVariants
                             items={availablePizzasSizes}
                             value={String(size)}
-                            onClick={(value) => setSize(Number(value) as PizzaSizesType)}
+                            onClick={(value) =>
+                                setSize(Number(value) as PizzaSizesType)
+                            }
                         />
                         <GroupVariants
                             items={pizzaTypes}
                             value={String(type)}
-                            onClick={(value) => setType(Number(value) as PizzaTypesType)}
+                            onClick={(value) =>
+                                setType(Number(value) as PizzaTypesType)
+                            }
                         />
                     </div>
 

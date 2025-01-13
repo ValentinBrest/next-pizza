@@ -11,4 +11,6 @@ export { ProductList } from './product-list';
 export { SearchInput } from './search-input';
 export { ProductImage } from './product-image';
 export { GroupVariants } from './group-variants';
+export { CartButton } from './cart-button';
+export { CartDrawer } from './cart-drawer';
 export * from './modals';

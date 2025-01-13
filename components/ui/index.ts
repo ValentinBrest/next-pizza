@@ -1,5 +1,6 @@
 export { Button } from './button';
 export * from './dialog';
+export * from './sheet';
 export { Drawer } from './drawer';
 export { Input } from './input';
 export { Popover, PopoverContent, PopoverTrigger } from './popover';

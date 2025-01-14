@@ -1,3 +1,4 @@
+'use client';
 import { cn } from '@/lib/utils';
 import {
     Button,
@@ -11,6 +12,7 @@ import {
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { CartDrawerItem } from './cart-drawer-item';
 
 interface CartDrawerProps {
     className?: string;
@@ -27,6 +29,18 @@ export const CartDrawer = ({ className, children }: CartDrawerProps) => {
                         В корзине <span className="font-bold">3 товара</span>
                     </SheetTitle>
                 </SheetHeader>
+                <div className="-mx-6 mt-5 overflow-auto flex-1 flex flex-col gap-2">
+                    <CartDrawerItem
+                        details="вапвап"
+                        id={0}
+                        imageUrl={
+                            'https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp'
+                        }
+                        name={'Чоризо фреш'}
+                        price={419}
+                        quantity={1}
+                    />
+                </div>
                 <SheetFooter className="-mx-6 bg-white p-8">
                     <div className="w-full">
                         <div className="flex mb-4">

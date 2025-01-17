@@ -20,7 +20,7 @@ interface ChoosePizzaFormProps {
     ingredients: Ingredient[];
     items: ProductItem[];
     loading?: boolean;
-    onSubmit?: (itemId: number, ingredients: number[]) => void;
+    onSubmit: (itemId: number, ingredients: number[]) => void;
     className?: string;
 }
 
@@ -41,6 +41,7 @@ export const ChoosePizzaForm = ({
         availablePizzasSizes,
         toggleIngredients,
         selectedValues,
+        currentItemId,
     } = usePizzaOptions(items);
 
     const totalPrice = calcTotalPizzaPrice(
@@ -52,11 +53,9 @@ export const ChoosePizzaForm = ({
     );
 
     const handleClickAdd = () => {
-        console.log({
-            size,
-            type,
-            ingredients,
-        });
+        if (currentItemId) {
+            onSubmit(currentItemId, Array.from(selectedValues));
+        }
     };
 
     return (

@@ -1,5 +1,5 @@
 'use client';
-import { cn } from '@/lib/utils';
+import { cn, numWord } from '@/lib/utils';
 import {
     Button,
     Sheet,
@@ -9,10 +9,13 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '../ui';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { CartDrawerItem } from './cart-drawer-item';
+import { useCartStore } from '@/store';
+import { getCartItemDetails } from '@/lib/get-cart-item-details';
+import { PizzaSizesType, PizzaTypesType } from '@/constants/pizza';
 
 interface CartDrawerProps {
     className?: string;
@@ -20,26 +23,58 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer = ({ className, children }: CartDrawerProps) => {
+    const {
+        fetchCartItems,
+        items,
+        totalAmount,
+        updateItemQuantity,
+        deleteCartItem,
+    } = useCartStore();
+
+    const onClickCountButton = (
+        id: number,
+        quantity: number,
+        type: 'plus' | 'minus',
+    ) => {
+        const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
+        updateItemQuantity(id, newQuantity);
+    };
+
+    useEffect(() => {
+        fetchCartItems();
+    }, []);
+
     return (
         <Sheet>
             <SheetTrigger>{children}</SheetTrigger>
             <SheetContent className="flex flex-col justify-between pb-0 bg-[#F4F1EE]">
                 <SheetHeader>
                     <SheetTitle>
-                        В корзине <span className="font-bold">3 товара</span>
+                        {items.length
+                            ? ` В корзине ${items.length} ${numWord(items.length, ['товар', 'товара', 'товаров'])}`
+                            : 'Корзина пуста'}
                     </SheetTitle>
                 </SheetHeader>
                 <div className="-mx-6 mt-5 overflow-auto flex-1 flex flex-col gap-2">
-                    <CartDrawerItem
-                        details="вапвап"
-                        id={0}
-                        imageUrl={
-                            'https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp'
-                        }
-                        name={'Чоризо фреш'}
-                        price={419}
-                        quantity={1}
-                    />
+                    {items.map((item) => (
+                        <CartDrawerItem
+                            details={getCartItemDetails(
+                                item.ingredients,
+                                item.pizzaType as PizzaTypesType,
+                                item.pizzaSize as PizzaSizesType,
+                            )}
+                            id={item.id}
+                            key={item.id}
+                            imageUrl={item.imageUrl}
+                            name={item.name}
+                            price={item.price}
+                            quantity={item.quantity}
+                            onClickCountButton={(type) =>
+                                onClickCountButton(item.id, item.quantity, type)
+                            }
+                            onClickRemove={() => deleteCartItem(item.id)}
+                        />
+                    ))}
                 </div>
                 <SheetFooter className="-mx-6 bg-white p-8">
                     <div className="w-full">
@@ -49,7 +84,9 @@ export const CartDrawer = ({ className, children }: CartDrawerProps) => {
                                 <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
                             </span>
 
-                            <span className="font-bold text-lg">25 ₽</span>
+                            <span className="font-bold text-lg">
+                                {totalAmount} руб.
+                            </span>
                         </div>
                         <Link href="/cart">
                             <Button

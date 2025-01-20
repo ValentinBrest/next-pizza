@@ -11,14 +11,16 @@ const generateProductItem = ({
     productId,
     pizzaType,
     size,
+    price,
 }: {
     productId: number;
     pizzaType?: 1 | 2;
     size?: 25 | 30 | 35;
+    price?: [minPrice: number, maxPrice: number];
 }) => {
     return {
         productId,
-        price: randomDecimalNumber(12, 50),
+        price: randomDecimalNumber(price?.[0] || 4, price?.[1] || 18),
         pizzaType,
         size,
     } as Prisma.ProductItemUncheckedCreateInput;
@@ -99,16 +101,19 @@ async function create() {
                 productId: pizza1.id,
                 pizzaType: 1,
                 size: 25,
+                price: [12, 18],
             }),
             generateProductItem({
                 productId: pizza1.id,
                 pizzaType: 2,
                 size: 30,
+                price: [20, 28],
             }),
             generateProductItem({
                 productId: pizza1.id,
                 pizzaType: 2,
                 size: 35,
+                price: [30, 44],
             }),
 
             // Пицца "Сырная"
@@ -116,31 +121,37 @@ async function create() {
                 productId: pizza2.id,
                 pizzaType: 1,
                 size: 25,
+                price: [11, 18],
             }),
             generateProductItem({
                 productId: pizza2.id,
                 pizzaType: 1,
                 size: 30,
+                price: [22, 31],
             }),
             generateProductItem({
                 productId: pizza2.id,
                 pizzaType: 1,
                 size: 35,
+                price: [33, 44],
             }),
             generateProductItem({
                 productId: pizza2.id,
                 pizzaType: 2,
                 size: 25,
+                price: [13, 20],
             }),
             generateProductItem({
                 productId: pizza2.id,
                 pizzaType: 2,
                 size: 30,
+                price: [24, 32],
             }),
             generateProductItem({
                 productId: pizza2.id,
                 pizzaType: 2,
                 size: 35,
+                price: [33, 43],
             }),
 
             // Пицца "Чоризо фреш"
@@ -148,16 +159,19 @@ async function create() {
                 productId: pizza3.id,
                 pizzaType: 1,
                 size: 25,
+                price: [12, 17],
             }),
             generateProductItem({
                 productId: pizza3.id,
                 pizzaType: 2,
                 size: 30,
+                price: [20, 31],
             }),
             generateProductItem({
                 productId: pizza3.id,
                 pizzaType: 2,
                 size: 35,
+                price: [33, 45],
             }),
 
             // Остальные продукты

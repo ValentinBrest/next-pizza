@@ -18,5 +18,5 @@ export const calcTotalPizzaPrice = (
             return acc + item.price;
         }, 0);
 
-    return pizzaPrice + ingredientsPrice;
+    return Number((pizzaPrice + ingredientsPrice).toFixed(2));
 };

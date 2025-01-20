@@ -29,6 +29,7 @@ export const CartDrawer = ({ className, children }: CartDrawerProps) => {
         totalAmount,
         updateItemQuantity,
         deleteCartItem,
+        loading,
     } = useCartStore();
 
     const onClickCountButton = (
@@ -90,6 +91,7 @@ export const CartDrawer = ({ className, children }: CartDrawerProps) => {
                         </div>
                         <Link href="/cart">
                             <Button
+                                loading={loading}
                                 type="submit"
                                 className="w-full h-12 text-base"
                             >

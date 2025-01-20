@@ -39,7 +39,9 @@ export const ProductList = ({
             ref={intersectionRef}
             id={title}
         >
-            <Title text={title} size="lg" className="font-bold" />
+            {products.length > 0 && (
+                <Title text={title} size="lg" className="font-bold" />
+            )}
             <div className="grid grid-cols-3 gap-12">
                 {products.map((pr) => (
                     <ProductCard

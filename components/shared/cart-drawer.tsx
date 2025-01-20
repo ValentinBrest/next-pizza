@@ -46,7 +46,7 @@ export const CartDrawer = ({ className, children }: CartDrawerProps) => {
 
     return (
         <Sheet>
-            <SheetTrigger>{children}</SheetTrigger>
+            <SheetTrigger asChild>{children}</SheetTrigger>
             <SheetContent className="flex flex-col justify-between pb-0 bg-[#F4F1EE]">
                 <SheetHeader>
                     <SheetTitle>

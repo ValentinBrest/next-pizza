@@ -21,7 +21,7 @@ export const CartButton = ({ className }: CartButtonProps) => {
                     className,
                 )}
             >
-                <b>{totalAmount} руб.</b>
+                <b>{Number(totalAmount.toFixed(2))} руб.</b>
                 <span className="h-full w-[1px] bg-white/30 mx-3"></span>
                 <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
                     <ShoppingCart

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import * as CartItem from './cart-item-details';
+import * as CartItem from '.';
 import { CartItemProps } from './cart-item-details/cart-item-details.types';
-import { CountButton } from './count-button';
+import { CountButton } from '../count-button';
 import { Trash2Icon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 

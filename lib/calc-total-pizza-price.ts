@@ -1,5 +1,6 @@
 import { PizzaSizesType, PizzaTypesType } from '@/constants/pizza';
 import { Ingredient, ProductItem } from '@prisma/client';
+import { rounded } from './utils';
 
 export const calcTotalPizzaPrice = (
     type: PizzaTypesType,
@@ -18,5 +19,5 @@ export const calcTotalPizzaPrice = (
             return acc + item.price;
         }, 0);
 
-    return Number((pizzaPrice + ingredientsPrice).toFixed(2));
+    return rounded(pizzaPrice + ingredientsPrice);
 };

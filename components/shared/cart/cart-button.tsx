@@ -1,5 +1,5 @@
 'use client';
-import { cn } from '@/lib/utils';
+import { cn, rounded } from '@/lib/utils';
 import { ArrowRight, ShoppingCart } from 'lucide-react';
 
 import { useCartStore } from '@/store';
@@ -22,7 +22,7 @@ export const CartButton = ({ className }: CartButtonProps) => {
                     className,
                 )}
             >
-                <b>{Number(totalAmount.toFixed(2))} руб.</b>
+                <b>{rounded(totalAmount)} руб.</b>
                 <span className="h-full w-[1px] bg-white/30 mx-3"></span>
                 <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
                     <ShoppingCart

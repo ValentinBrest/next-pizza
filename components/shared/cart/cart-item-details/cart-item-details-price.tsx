@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn, rounded } from '@/lib/utils';
 
 interface Props {
     value: number;
@@ -7,8 +7,6 @@ interface Props {
 
 export const CartItemDetailsPrice: React.FC<Props> = ({ value, className }) => {
     return (
-        <h2 className={cn('font-bold', className)}>
-            {Number(value.toFixed(2))} руб.
-        </h2>
+        <h2 className={cn('font-bold', className)}>{rounded(value)} руб.</h2>
     );
 };

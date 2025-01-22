@@ -1,5 +1,6 @@
 import { CartDTO } from '@/services/dto/cart.dto';
 import { calcCartItemTotalPrice } from './calc-cart-item-total-price';
+import { rounded } from './utils';
 
 export type CartStateItem = {
     id: number;
@@ -7,6 +8,7 @@ export type CartStateItem = {
     price: number;
     quantity: number;
     imageUrl: string;
+    disabled: boolean;
     pizzaType?: number | null;
     pizzaSize?: number | null;
     ingredients: Array<{ name: string; price: number }>;
@@ -26,6 +28,7 @@ export const getItemsDetails = (data: CartDTO): ReturnType => {
         imageUrl: item.productItem.product.imageUrl,
         pizzaType: item.productItem.pizzaType,
         pizzaSize: item.productItem.size,
+        disabled: false,
         ingredients: item.ingredients.map((ingr) => ({
             name: ingr.name,
             price: ingr.price,
@@ -34,6 +37,6 @@ export const getItemsDetails = (data: CartDTO): ReturnType => {
 
     return {
         items,
-        totalAmount: data.totalAmount,
+        totalAmount: rounded(data.totalAmount),
     };
 };

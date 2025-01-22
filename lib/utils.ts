@@ -13,3 +13,6 @@ export function numWord(value: number, words: Array<string>): string {
     if (num == 1) return words[0];
     return words[2];
 }
+
+export const rounded = (num: number, decimals: number = 2) =>
+    Number(num.toFixed(decimals));

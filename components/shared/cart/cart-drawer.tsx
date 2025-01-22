@@ -1,11 +1,11 @@
 'use client';
 import { PizzaSizesType, PizzaTypesType } from '@/constants/pizza';
+import { useCart } from '@/hook';
 import { getCartItemDetails } from '@/lib/get-cart-item-details';
-import { cn, numWord } from '@/lib/utils';
-import { useCartStore } from '@/store';
+import { cn, numWord, rounded } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useState } from 'react';
 import {
     Button,
     Sheet,
@@ -24,27 +24,10 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer = ({ className, children }: CartDrawerProps) => {
-    const {
-        fetchCartItems,
-        items,
-        totalAmount,
-        updateItemQuantity,
-        deleteCartItem,
-        loading,
-    } = useCartStore();
+    const { items, totalAmount, deleteCartItem, loading, onClickCountButton } =
+        useCart();
 
-    const onClickCountButton = (
-        id: number,
-        quantity: number,
-        type: 'plus' | 'minus',
-    ) => {
-        const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
-        updateItemQuantity(id, newQuantity);
-    };
-
-    useEffect(() => {
-        fetchCartItems();
-    }, []);
+    const [loadingRedirect, setLoadingRedirect] = useState(false);
 
     return (
         <Sheet>
@@ -77,6 +60,7 @@ export const CartDrawer = ({ className, children }: CartDrawerProps) => {
                                         name={item.name}
                                         price={item.price}
                                         quantity={item.quantity}
+                                        disabled={item.disabled}
                                         onClickCountButton={(type) =>
                                             onClickCountButton(
                                                 item.id,
@@ -99,13 +83,15 @@ export const CartDrawer = ({ className, children }: CartDrawerProps) => {
                                         </span>
 
                                         <span className="font-bold text-lg">
-                                            {Number(totalAmount.toFixed(2))}{' '}
-                                            руб.
+                                            {`${rounded(totalAmount)} руб.`}
                                         </span>
                                     </div>
-                                    <Link href="/cart">
+                                    <Link href="/checkout">
                                         <Button
-                                            loading={loading}
+                                            onClick={() =>
+                                                setLoadingRedirect(true)
+                                            }
+                                            loading={loading || loadingRedirect}
                                             type="submit"
                                             className="w-full h-12 text-base"
                                         >

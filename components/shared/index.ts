@@ -11,5 +11,7 @@ export { ProductList } from './product-list';
 export { SearchInput } from './search-input';
 export { ProductImage } from './product-image';
 export { GroupVariants } from './group-variants';
+export { Card } from './card';
+export * from './checkout';
 export * from './cart';
 export * from './modals';

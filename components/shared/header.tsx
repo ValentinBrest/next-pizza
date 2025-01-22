@@ -3,18 +3,24 @@ import { User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '../ui';
-import { CartButton } from './cart-button';
 import { Container } from './container';
 import { SearchInput } from './search-input';
 import { Title } from './title';
+import { CartButton } from './cart';
 
 interface HeaderProps {
     className?: string;
+    hasSearch?: boolean;
+    hasCartButton?: boolean;
 }
 
-export const Header = ({ className }: HeaderProps) => {
+export const Header = ({
+    className,
+    hasSearch = true,
+    hasCartButton = true,
+}: HeaderProps) => {
     return (
-        <header className={cn('border border-b', className)}>
+        <header className={cn('border-b', className)}>
             <Container className="flex items-center justify-between py-4">
                 <Link href={'/'} className="flex items-center gap-4">
                     <Image src={'/logo.png'} alt="" width={35} height={35} />
@@ -30,7 +36,7 @@ export const Header = ({ className }: HeaderProps) => {
                 </Link>
 
                 <div className="mx-10 flex-1">
-                    <SearchInput />
+                    {hasSearch && <SearchInput />}
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -38,7 +44,7 @@ export const Header = ({ className }: HeaderProps) => {
                         <User size={16} />
                         Войти
                     </Button>
-                    <CartButton />
+                    {hasCartButton && <CartButton />}
                 </div>
             </Container>
         </header>

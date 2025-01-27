@@ -55,13 +55,22 @@ export default function CheckoutPage() {
                             loading={loading}
                         />
 
-                        <CheckoutPersonalInfo items={personalInfo} />
-                        <CheckoutAddress />
+                        <CheckoutPersonalInfo
+                            items={personalInfo}
+                            className={
+                                loading ? 'opacity-40 pointer-events-none' : ''
+                            }
+                        />
+                        <CheckoutAddress
+                            className={
+                                loading ? 'opacity-40 pointer-events-none' : ''
+                            }
+                        />
                     </div>
                     <div className="w-[450px]">
                         <CheckoutSidebar
                             totalAmount={totalAmount}
-                            loading={false}
+                            loading={loading}
                         />
                     </div>
                 </form>

@@ -17,7 +17,7 @@ interface CartState {
 
 export const useCartStore = create<CartState>((set) => ({
     error: false,
-    loading: false,
+    loading: true,
     items: [],
     totalAmount: 0,
 

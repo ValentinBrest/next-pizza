@@ -1,4 +1,5 @@
 'use client';
+import { createOrder } from '@/app/api/actions';
 import { Container, Title } from '@/components/shared';
 import {
     CheckoutAddress,
@@ -13,9 +14,12 @@ import {
 } from '@/constants/checkout-form';
 import { useCart } from '@/hook';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 export default function CheckoutPage() {
+    const [submitting, setSubmitting] = useState(false);
     const { totalAmount, items, deleteCartItem, loading, onClickCountButton } =
         useCart();
 
@@ -31,8 +35,26 @@ export default function CheckoutPage() {
         },
     });
 
-    const onSubmit = (data: CheckoutFormValues) => {
-        console.log(data);
+    const onSubmit = async (data: CheckoutFormValues) => {
+        try {
+            setSubmitting(true);
+
+            const url = await createOrder(data);
+
+            toast.error('Заказ успешно оформлен! 📝 Переход на оплату... ', {
+                icon: '✅',
+            });
+
+            if (url) {
+                location.href = url;
+            }
+        } catch (err) {
+            console.log(err);
+            setSubmitting(false);
+            toast.error('Не удалось создать заказ', {
+                icon: '❌',
+            });
+        }
     };
 
     return (
@@ -70,7 +92,7 @@ export default function CheckoutPage() {
                     <div className="w-[450px]">
                         <CheckoutSidebar
                             totalAmount={totalAmount}
-                            loading={loading}
+                            loading={loading || submitting}
                         />
                     </div>
                 </form>

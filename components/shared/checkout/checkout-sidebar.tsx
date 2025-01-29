@@ -5,9 +5,6 @@ import { Button, Skeleton } from '../../ui';
 import { cn, rounded } from '@/lib/utils';
 import { Card } from '../card';
 
-const VAT = 15;
-const DELIVERY_PRICE = 5;
-
 interface Props {
     totalAmount: number;
     loading?: boolean;
@@ -19,6 +16,8 @@ export const CheckoutSidebar: React.FC<Props> = ({
     loading,
     className,
 }) => {
+    const VAT = 15;
+    const DELIVERY_PRICE = totalAmount ? 5 : 0;
     const vatPrice = rounded((totalAmount * VAT) / 100);
     const totalPrice = rounded(totalAmount + DELIVERY_PRICE + vatPrice);
 

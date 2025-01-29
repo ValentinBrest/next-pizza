@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { FormInput, FormTextarea } from '../form';
+import { FormTextarea } from '../form';
 import { Card } from '../card';
 import { AdressInput } from '../address-input';
 import { Controller, useFormContext } from 'react-hook-form';

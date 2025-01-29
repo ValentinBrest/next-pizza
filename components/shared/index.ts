@@ -13,5 +13,6 @@ export { ProductImage } from './product-image';
 export { GroupVariants } from './group-variants';
 export { Card } from './card';
 export * from './checkout';
+export * from './email-templates';
 export * from './cart';
 export * from './modals';

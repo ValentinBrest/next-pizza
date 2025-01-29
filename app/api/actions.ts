@@ -1,5 +1,8 @@
 'use server';
+import { PayOrderTemplate } from '@/components/shared/email-templates/pay-order';
 import { CheckoutFormValues } from '@/constants/checkout-form';
+import { createPayment } from '@/lib/create-payment';
+import { sendEmail } from '@/lib/send-email';
 import { prisma } from '@/prisma/prisma-client';
 import { OrderStatus } from '@prisma/client';
 import { cookies } from 'next/headers';
@@ -74,8 +77,38 @@ export async function createOrder(data: CheckoutFormValues) {
             },
         });
 
-        // TODO: сделать создание ссылки оплаты
-        return 'ссылка оплаты';
+        const paymentData = await createPayment({
+            amount: order.totalAmount,
+            description: 'Оплата заказа №' + order.id,
+            orderId: order.id,
+        });
+
+        if (!paymentData) {
+            throw new Error('Payment data not found');
+        }
+
+        await prisma.order.update({
+            where: {
+                id: order.id,
+            },
+            data: {
+                paymentId: paymentData.id,
+            },
+        });
+
+        const paymentUrl = paymentData.confirmation.confirmation_url;
+
+        await sendEmail(
+            data.email,
+            'Next Pizza/ Оплата заказа № ' + order.id,
+            PayOrderTemplate({
+                orderId: order.id,
+                totalAmount: order.totalAmount,
+                paymentUrl,
+            }),
+        );
+
+        return paymentUrl;
     } catch (error) {
         console.log('[CreateOrder] Server error', error);
     }

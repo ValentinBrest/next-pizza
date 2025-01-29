@@ -1,3 +1,4 @@
+'use client';
 import { cn } from '@/lib/utils';
 import { User } from 'lucide-react';
 import Image from 'next/image';
@@ -7,6 +8,9 @@ import { Container } from './container';
 import { SearchInput } from './search-input';
 import { Title } from './title';
 import { CartButton } from './cart';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 interface HeaderProps {
     className?: string;
@@ -19,6 +23,31 @@ export const Header = ({
     hasSearch = true,
     hasCartButton = true,
 }: HeaderProps) => {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        let toastMessage = '';
+
+        if (searchParams.has('paid')) {
+            toastMessage =
+                'Заказ успешно оплачен! Информация отправлена на почту.';
+        }
+
+        if (searchParams.has('verified')) {
+            toastMessage = 'Почта успешно подтверждена!';
+        }
+
+        if (toastMessage) {
+            setTimeout(() => {
+                router.replace('/');
+                toast.success(toastMessage, {
+                    duration: 3000,
+                });
+            }, 1000);
+        }
+    }, []);
+
     return (
         <header className={cn('border-b', className)}>
             <Container className="flex items-center justify-between py-4">

@@ -38,7 +38,7 @@ export const FormInput = ({
     return (
         <div className="grid w-full items-center gap-1.5 relative pb-6">
             {label && (
-                <p className="font-medium mb-2">
+                <p className="font-medium mb-1">
                     <Label htmlFor={name}>{label}</Label>{' '}
                     {required && <RequiredSymbol />}
                 </p>

@@ -1,6 +1,6 @@
 import { Header } from '@/components/shared';
 import type { Metadata } from 'next';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 export const metadata: Metadata = {
     title: 'Next Pizza | Оформление заказа',
@@ -14,7 +14,9 @@ export default function RootLayout({
 }>) {
     return (
         <main className="min-h-screen bg-[#F4F1EE]">
-            <Header hasSearch={false} hasCartButton={false} />
+            <Suspense>
+                <Header hasSearch={false} hasCartButton={false} />
+            </Suspense>
             {children}
         </main>
     );

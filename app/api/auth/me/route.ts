@@ -1,8 +1,8 @@
+import { authOptions } from '@/constants/auth-options';
 import { prisma } from '@/prisma/prisma-client';
 import { getServerSession } from 'next-auth/next';
 import { NextResponse } from 'next/server';
-import { authOptions } from '../[...nextauth]/route';
-
+export const dynamic = 'force-dynamic';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function GET(req: any, res: any) {
     try {

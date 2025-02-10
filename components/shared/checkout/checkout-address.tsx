@@ -1,3 +1,4 @@
+'use client';
 import { cn } from '@/lib/utils';
 import { FormTextarea } from '../form';
 import { Card } from '../card';
